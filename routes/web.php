@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\DashboardController;
 
 /*
@@ -26,5 +27,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::group(['as'=>'app.','prefix'=>'app','middleware'=>['auth']],function(){
 
     Route::get('/dashboard',DashboardController::class)->name('dashboard');
+    Route::resource('roles', RoleController::class);
 });
 
