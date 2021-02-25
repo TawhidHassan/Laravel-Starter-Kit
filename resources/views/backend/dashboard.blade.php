@@ -10,7 +10,13 @@
                     <i class="pe-7s-car icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>Dashboard</div>
+                <div>
+                    @role('admin')
+                    admin Dashboard
+                    @else
+                    user Dashboard
+                    @endrole
+                </div>
             </div>
         </div>
     </div>

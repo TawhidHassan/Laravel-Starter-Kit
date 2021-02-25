@@ -24,9 +24,4 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::group(['as'=>'app.','prefix'=>'app','middleware'=>['auth']],function(){
-
-    Route::get('/dashboard',DashboardController::class)->name('dashboard');
-    Route::resource('roles', RoleController::class);
-});
 

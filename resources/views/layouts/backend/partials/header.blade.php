@@ -83,7 +83,7 @@
                                 sifat
                             </div>
                             <div class="widget-subheading">
-                                Admin
+                                {{ Auth::user()->role->name }}
                             </div>
                         </div>
                     </div>
