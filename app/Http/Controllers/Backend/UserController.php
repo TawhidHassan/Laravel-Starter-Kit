@@ -43,6 +43,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('app.users.create');
+       
         $user = User::create([
             'role_id' => $request->role,
             'name' => $request->name,
@@ -51,9 +53,13 @@ class UserController extends Controller
             'status' => $request->filled('status'),
         ]);
         
-
+        // upload images
+        if ($request->hasFile('avatar')) {
+            $user->addMedia($request->avatar)->toMediaCollection('avatar');
+        }
         notify()->success('User Successfully Added.', 'Added');
         return redirect()->route('app.users.index');
+        // return $request->all();
     }
 
     /**
