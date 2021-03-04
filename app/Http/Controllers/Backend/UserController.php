@@ -103,7 +103,10 @@ class UserController extends Controller
             'status' => $request->filled('status'),
         ]);
         // upload images
-        
+         // upload images
+         if ($request->hasFile('avatar')) {
+            $user->addMedia($request->avatar)->toMediaCollection('avatar');
+        }
         notify()->success('User Successfully Updated.', 'Updated');
         return redirect()->route('app.users.index');
     }

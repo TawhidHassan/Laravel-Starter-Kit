@@ -98,13 +98,15 @@
                               <h5 class="card-title">Select Role and Status</h5>
                               <select name="role" label="Select Role">
                                 @foreach($roles as $key=>$role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                <option value="{{$role->id}}" @isset($user)
+                                    {{$user->role->id=$role->id?'selected':''}}
+                                @endisset>{{$role->name}}</option>
                                 @endforeach
                               </select>
                             <br>
                               <label for="name">Avatar</label>
-                              <input id="avatar" type="file" class="dropify from-control @error('password') is-invalid @enderror" 
-                              name="avatar" />
+                              <input id="avatar" type="file" class="dropify from-control @error('password') is-invalid @enderror"
+                              name="avatar" data-default-file="{{ isset($user) ? $user->getFirstMediaUrl('avatar','thumb') : ''  }}"/>
       
                               @error('avatar')
                                <span class="invalid-feedback" role="alert">
@@ -114,7 +116,11 @@
                               <br>
 
                               <div class="form-check form-switch">
-                                <input class="form-check-input" name="status" type="checkbox" id="status">
+                                <input class="form-check-input" name="status" type="checkbox" id="status" @if ($user->status!=null)
+                                    checked
+                                @else
+                                    
+                                @endif>
                                 <label class="form-check-label" for="status">Status</label>
                               </div>
 
