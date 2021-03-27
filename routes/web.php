@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\DashboardController;
 
@@ -24,4 +25,6 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
+// Pages route e.g. [about,contact,etc]  
+//importan -> this route diclar on bottom of this file0
+Route::get('/{slug}', PageController::class)->name('page');

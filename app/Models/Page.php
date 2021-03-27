@@ -31,4 +31,16 @@ class Page extends Model implements HasMedia
             ->useFallbackPath(config('app.placeholder').'800.png');
     }
 
+
+    /**
+     * Find page by slug.
+     *
+     * @param $slug
+     * @return mixed
+     */
+    public static function findBySlug($slug)
+    {
+        return self::where('slug',$slug)->firstOrFail();
+    }
+
 }
