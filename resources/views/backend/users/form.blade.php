@@ -116,7 +116,7 @@
                               <br>
 
                               <div class="form-check form-switch">
-                                <input class="form-check-input" name="status" type="checkbox" id="status" @if ($user->status!=null)
+                                <input class="form-check-input" name="status" type="checkbox" id="status" @if (  isset($user) ? $user->status!=null:"")
                                     checked
                                 @else
                                     

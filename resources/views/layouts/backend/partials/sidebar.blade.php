@@ -53,6 +53,13 @@
                                     Users
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{route('app.backups.index')}}" class="{{Request::is('app/users*')? 'mm-active':''}}">
+                                    <i class="metismenu-icon pe-7s-check"></i>
+                                    BackUp
+                                </a>
+                            </li>
                            
                         </ul>
                     </div>
