@@ -23,6 +23,10 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "dropify": "^0.2.2",
+        "izitoast": "^1.4.0",
+        "nestable2": "^1.6.0",
+        "sweetalert": "^2.1.2",
         "sweetalert2": "^10.15.5"
     }
 }

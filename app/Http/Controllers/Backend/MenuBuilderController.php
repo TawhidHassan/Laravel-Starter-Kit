@@ -59,7 +59,22 @@ class MenuBuilderController extends Controller
         return redirect()->route('app.menus.builder',$menu->id);
     }
 
+   
      /**
+     * Edit menu item
+     * @param $menuId
+     * @param $itemId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function itemEdit($menuId, $itemId)
+    {
+        Gate::authorize('app.menus.edit');
+        $menu = Menu::findOrFail($menuId);
+        $menuItem = $menu->menuItems()->findOrFail($itemId);
+        return view('backend.menus.item.form',compact('menu','menuItem'));
+    }
+
+  /**
      * Update menu item
      * @param Request $request
      * @param $menuId
@@ -82,20 +97,21 @@ class MenuBuilderController extends Controller
         return redirect()->route('app.menus.builder',$menu->id);
     }
 
-
-     /**
-     * Edit menu item
+ /**
+     * Delete a menu item
      * @param $menuId
      * @param $itemId
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function itemEdit($menuId, $itemId)
+    public function itemDestroy($menuId, $itemId)
     {
-        Gate::authorize('app.menus.edit');
-        $menu = Menu::findOrFail($menuId);
-        $menuItem = $menu->menuItems()->findOrFail($itemId);
-        return view('backend.menus.item.form',compact('menu','menuItem'));
+        Gate::authorize('app.menus.destroy');
+        Menu::findOrFail($menuId)
+            ->menuItems()
+            ->findOrFail($itemId)
+            ->delete();
+        notify()->success('Menu Item Successfully Deleted.', 'Deleted');
+        return redirect()->back();
     }
-
 
 }

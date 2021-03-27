@@ -39,7 +39,7 @@ Route::resource('pages', PageController::class)->except(['show']);
 
 // Menu Builder
 Route::resource('menus', MenuController::class)->except(['show']);
-
+Route::post('menus/{menu}/order', [MenuController::class, 'orderItem'])->name('menus.order');
 Route::group(['as' => 'menus.', 'prefix' => 'menus/{id}/'], function () {
     Route::get('builder', [MenuBuilderController::class, 'index'])->name('builder');
     // Menu Item

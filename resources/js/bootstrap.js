@@ -9,7 +9,11 @@ window._ = require('lodash');
 try {
    
     window.$ = window.jQuery = require('jquery');
+    window.iziToast = require('izitoast/dist/js/iziToast.min.js');
     window.Swal = require('sweetalert2');
+     
+     // Nestable
+     require('nestable2/jquery.nestable');
 
 } catch (e) {}
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Menu;
+use App\Models\MenuItem;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -109,4 +110,38 @@ class MenuController extends Controller
         }
         return redirect()->back();
     }
+
+
+     /**
+     * Order menu items
+     * @param Request $request
+     */
+    public function orderItem(Request $request,$id)
+    {
+        Gate::authorize('app.menus.index');
+        $menuItemOrder = json_decode($request->get('order'));
+        $this->orderMenu($menuItemOrder, null);
+    }
+
+
+     /**
+     * Save menu item order
+     * @param array $menuItems
+     * @param $parentId
+     */
+    private function orderMenu(array $menuItems, $parentId)
+    {
+        Gate::authorize('app.menus.index');
+        foreach ($menuItems as $index => $menuItem) {
+            $item = MenuItem::findOrFail($menuItem->id);
+            $item->order = $index + 1;
+            $item->parent_id = $parentId;
+            $item->update();
+
+            if (isset($menuItem->children)) {
+                $this->orderMenu($menuItem->children, $item->id);
+            }
+        }
+    }
+
 }
