@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Page extends Model
-{
+class Page extends Model implements HasMedia
+{ 
+    use InteractsWithMedia;
     use HasFactory;
     
  /**
@@ -15,5 +18,17 @@ class Page extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+
+     /**
+     * Register media collections
+     */
+    public function registerMediaCollections() : void
+    {
+        $this->addMediaCollection('image')
+            ->singleFile()
+            ->useFallbackUrl(config('app.placeholder').'800.png')
+            ->useFallbackPath(config('app.placeholder').'800.png');
+    }
 
 }
