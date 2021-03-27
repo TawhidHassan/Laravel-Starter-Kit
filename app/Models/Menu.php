@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\MenuItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Menu extends Model
 {
@@ -22,8 +23,6 @@ class Menu extends Model
      */
     public function menuItems()
     {
-        return $this->hasMany(MenuItem::class)
-            ->doesntHave('parent')
-            ->orderBy('order','asc');
+        return $this->hasMany(MenuItem::class);
     }
 }

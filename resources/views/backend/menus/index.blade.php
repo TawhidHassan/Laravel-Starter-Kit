@@ -58,7 +58,7 @@
                                 </td>
                                 <td class="text-right">
                                     <a class="btn btn-success btn-sm"
-                                       href="">
+                                       href="{{ route('app.menus.builder',$menu->id) }}">
                                         <i class="fas fa-list-ul"></i>
                                         <span>Builder</span>
                                     </a>
