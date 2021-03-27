@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\BackupController;
@@ -29,3 +30,6 @@ Route::post('profile/', [ProfileController::class, 'update'])->name('profile.upd
 // Security
 Route::get('profile/security', [ProfileController::class, 'changePassword'])->name('profile.password.change');
 Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+
+// Pages
+Route::resource('pages', PageController::class)->except(['show']);
