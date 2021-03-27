@@ -123,8 +123,15 @@ class BackupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($file_name)
     {
-        //
+        Gate::authorize('app.backups.destroy');
+        $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
+
+        if ($disk->exists(config('backup.backup.name') . '/' . $file_name)) {
+            $disk->delete(config('backup.backup.name') . '/' . $file_name);
+        }
+        notify()->success('Backup Successfully Deleted.', 'Deleted');
+        return back();
     }
 }
