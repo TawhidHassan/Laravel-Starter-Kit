@@ -42,6 +42,9 @@
                     <form id="new-backup-form" action="{{ route('app.backups.store') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+                    {{-- <form id="new-backup-form" action="http://localhost/laraStarter/public/app/backups" method="POST" style="display: none;">
+                        @csrf
+                    </form> --}}
                 </div>
             </div>
         </div>
