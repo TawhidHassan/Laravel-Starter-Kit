@@ -134,6 +134,30 @@ class PermissionSeeder extends Seeder
             'name' => 'Delete Page',
             'slug' => 'app.pages.destroy',
         ]);
+
+
+        // Menu management
+        $moduleAppMenu = Module::updateOrCreate(['name' => 'Menu Management']);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Access Menus',
+            'slug' => 'app.menus.index',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Create Menu',
+            'slug' => 'app.menus.create',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Edit Menu',
+            'slug' => 'app.menus.edit',
+        ]);
+        Permission::updateOrCreate([
+            'module_id' => $moduleAppMenu->id,
+            'name' => 'Delete Menu',
+            'slug' => 'app.menus.destroy',
+        ]);
     
     }
 }
