@@ -34,7 +34,7 @@ class BackupController extends Controller
                     'file_name' => $file_name,
                     'file_size' => $this->bytesToHuman($disk->size($f)),
                     'created_at' => Carbon::parse($disk->lastModified($f))->diffForHumans(),
-                    'download_link' => '#',
+                    'download_link' => action([BackupController::class,'download'], [$file_name]),
                     // action('Backend\BackupController@download', [$file_name])
                 ];
             }
@@ -169,6 +169,20 @@ class BackupController extends Controller
             $disk->delete(config('backup.backup.name') . '/' . $file_name);
         }
         notify()->success('Backup Successfully Deleted.', 'Deleted');
+        return back();
+    }
+
+     /**
+     * Clean all old backups
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clean()
+    {
+        Gate::authorize('app.backups.destroy');
+        // start the backup process
+        Artisan::call('backup:clean');
+
+        notify()->success('All Old Backups Successfully Deleted.', 'Added');
         return back();
     }
 }
