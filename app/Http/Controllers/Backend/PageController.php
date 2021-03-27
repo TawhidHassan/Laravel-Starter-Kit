@@ -77,7 +77,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        Gate::authorize('app.pages.edit');
+        return view('backend.pages.form', compact('page'));
     }
 
     /**
@@ -89,7 +90,21 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        //
+        $page->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->slug),
+            'excerpt' => $request->excerpt,
+            'body' => $request->body,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+            'status' => $request->filled('status'),
+        ]);
+        // upload images
+        if ($request->hasFile('image')) {
+            $page->addMedia($request->image)->toMediaCollection('image');
+        }
+        notify()->success('Page Successfully Update.', 'Updated');
+        return redirect()->route('app.pages.index');
     }
 
     /**
@@ -100,6 +115,8 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        $page->delete();
+        notify()->success('Page Successfully Deleted.', 'Deleted');
+        return back();
     }
 }
