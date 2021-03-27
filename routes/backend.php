@@ -25,3 +25,7 @@ Route::delete('backups', [BackupController::class, 'clean'])->name('backups.clea
 // Profile
 Route::get('profile/', [ProfileController::class, 'index'])->name('profile.index');
 Route::post('profile/', [ProfileController::class, 'update'])->name('profile.update');
+
+// Security
+Route::get('profile/security', [ProfileController::class, 'changePassword'])->name('profile.password.change');
+Route::post('profile/security', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
