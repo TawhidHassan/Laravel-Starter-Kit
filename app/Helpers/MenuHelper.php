@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('DummyFunction')) {
+if (!function_exists('menu')) {
 
     /**
      * description
