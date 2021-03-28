@@ -42,9 +42,18 @@
                     <form id="new-backup-form" action="{{ route('app.backups.store') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    {{-- <form id="new-backup-form" action="http://localhost/laraStarter/public/app/backups" method="POST" style="display: none;">
+
+                    <button onclick="event.preventDefault();
+                          document.getElementById('new-backup-formx').submit();"
+                       class="btn-shadow btn btn-success">
+                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                            <i class="fas fa-plus-circle fa-w-20"></i>
+                        </span>
+                        {{ __('Create New Backup From Main') }}
+                    </button>
+                    <form id="new-backup-formx" action="http://localhost/laraStarter/public/app/backups" method="POST" style="display: none;">
                         @csrf
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>
