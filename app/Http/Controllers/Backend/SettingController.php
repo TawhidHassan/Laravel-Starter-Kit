@@ -110,5 +110,14 @@ class SettingController extends Controller
         return back();
     }
 
+     /**
+     * Show Socialite Settings Page
+     * @return \Illuminate\View\View
+     */
+    public function socialite()
+    {
+        return view('backend.settings.socialite');
+    }
+
 
 }
