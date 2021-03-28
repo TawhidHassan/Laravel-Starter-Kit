@@ -6,6 +6,8 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Settings\UpdateAppearanceRequest;
 use App\Http\Requests\Settings\UpdateGeneralSettingsRequest;
 
 class SettingController extends Controller
@@ -34,5 +36,47 @@ class SettingController extends Controller
         notify()->success('Settings Successfully Updated.','Success');
         return back();
     }
+
+
+     /**
+     * Show Appearance Settings Page
+     * @return \Illuminate\View\View
+     */
+    public function appearance()
+    {
+        return view('backend.settings.appearance');
+    }
+
+ /**
+     * Update Appearance
+     * @param UpdateAppearanceRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAppearance(UpdateAppearanceRequest $request)
+    {
+        if ($request->hasFile('site_logo')) {
+            $this->deleteOldLogo(config('settings.site_logo'));
+            Setting::updateOrCreate(['name'=>'site_logo'],['value'=>Storage::disk('public')->putFile('logos', $request->file('site_logo'))]);
+            
+        }
+        if ($request->hasFile('site_favicon')) {
+            $this->deleteOldLogo(config('settings.site_favicon'));
+            Setting::updateOrCreate(['name'=>'site_favicon'],['value'=> Storage::disk('public')->putFile('logos', $request->file('site_favicon'))]);
+            
+        }
+        notify()->success('Settings Successfully Updated.','Success');
+        return back();
+    }
+
+
+     /**
+     * Delete old logos from storage
+     * @param $path
+     */
+    private function deleteOldLogo($path)
+    {
+        Storage::disk('public')->delete($path);
+    }
+
 
 }
