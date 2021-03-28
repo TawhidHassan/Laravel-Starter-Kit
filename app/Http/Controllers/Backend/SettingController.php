@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Settings\UpdateAppearanceRequest;
 use App\Http\Requests\Settings\UpdateMailSettingsRequest;
 use App\Http\Requests\Settings\UpdateGeneralSettingsRequest;
+use App\Http\Requests\Settings\UpdateSocialiteSettingsRequest;
 
 class SettingController extends Controller
 {
@@ -119,5 +120,26 @@ class SettingController extends Controller
         return view('backend.settings.socialite');
     }
 
+ /**
+     * Update Socialite Settings
+     *
+     * @param UpdateSocialiteSettingsRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateSocialiteSettings(UpdateSocialiteSettingsRequest $request)
+    {
+        Setting::updateSettings($request->validated());
+        // Update .env file
+        Artisan::call("env:set FACEBOOK_CLIENT_ID='". $request->facebook_client_id ."'");
+        Artisan::call("env:set FACEBOOK_CLIENT_SECRET='". $request->facebook_client_secret ."'");
 
+        Artisan::call("env:set GOOGLE_CLIENT_ID='". $request->google_client_id ."'");
+        Artisan::call("env:set GOOGLE_CLIENT_SECRET='". $request->google_client_secret ."'");
+
+        Artisan::call("env:set GITHUB_CLIENT_ID='". $request->github_client_id ."'");
+        Artisan::call("env:set GITHUB_CLIENT_SECRET='". $request->github_client_secret ."'");
+
+        notify()->success('Settings Successfully Updated.','Success');
+        return back();
+    }
 }

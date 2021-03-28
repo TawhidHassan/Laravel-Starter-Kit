@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Settings;
 
-use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSocialiteSettingsRequest extends FormRequest

@@ -45,7 +45,7 @@
             </div>
             <ul class="header-menu nav">
                 <li class="dropdown nav-item">
-                    <a href="{{ route('app.dashboard') }}" class="nav-link">
+                    <a href="{{ route('home') }}" class="nav-link">
                         <i class="nav-link-icon pe-7s-shuffle"></i>
                         Visit Site
                     </a>

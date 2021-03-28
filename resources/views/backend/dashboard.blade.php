@@ -10,13 +10,7 @@
                     <i class="pe-7s-car icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>
-                    @role('admin')
-                    admin Dashboard
-                    @else
-                    user Dashboard
-                    @endrole
-                </div>
+                <div>Dashboard</div>
             </div>
         </div>
     </div>
@@ -29,7 +23,7 @@
                             <div class="widget-heading">Total Users</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-success">22</div>
+                            <div class="widget-numbers text-success">{{ $usersCount }}</div>
                         </div>
                     </div>
                 </div>
@@ -43,7 +37,7 @@
                             <div class="widget-heading">Roles</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-warning">{22</div>
+                            <div class="widget-numbers text-warning">{{ $rolesCount }}</div>
                         </div>
                     </div>
                 </div>
@@ -57,7 +51,7 @@
                             <div class="widget-heading">Total Pages</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-danger">22</div>
+                            <div class="widget-numbers text-danger">{{ $pagesCount }}</div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +65,7 @@
                             <div class="widget-heading">Menus</div>
                         </div>
                         <div class="widget-content-right">
-                            <div class="widget-numbers text-info">22</div>
+                            <div class="widget-numbers text-info">{{ $menusCount }}</div>
                         </div>
                     </div>
                 </div>
@@ -94,41 +88,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
+                        @foreach($users as $key=>$user)
                             <tr>
-                                <td class="text-center text-muted">#2/td>
+                                <td class="text-center text-muted">#{{ $key + 1 }}</td>
                                 <td>
                                     <div class="widget-content p-0">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left mr-3">
                                                 <div class="widget-content-left">
                                                     <img width="40" class="rounded-circle"
-                                                         src="" alt="User Avatar">
+                                                         src="{{ $user->getFirstMediaUrl('avatar') != null ? $user->getFirstMediaUrl('avatar','thumb') : config('app.placeholder').'160' }}" alt="User Avatar">
                                                 </div>
                                             </div>
                                             <div class="widget-content-left flex2">
-                                                <div class="widget-heading">sifat</div>
+                                                <div class="widget-heading">{{ $user->name }}</div>
                                                 <div class="widget-subheading opacity-7">
-                                                    {{-- @if ($user->role)
-                                                        <span class="badge badge-info">admin</span>
-                                                    @else --}}
+                                                    @if ($user->role)
+                                                        <span class="badge badge-info">{{ $user->role->name }}</span>
+                                                    @else
                                                         <span class="badge badge-danger">No role found :(</span>
-                                                    {{-- @endif --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-center">and@gmail.cpm</td>
-                                <td class="text-center">12:22Pm</td>
+                                <td class="text-center">{{ $user->email }}</td>
+                                <td class="text-center">{{ $user->last_login_at }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href=""><i
+                                    <a class="btn btn-info btn-sm" href="{{ route('app.users.show',$user->id) }}"><i
                                             class="fas fa-eye"></i>
                                         <span>Details</span>
                                     </a>
                                 </td>
                             </tr>
-                       
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
