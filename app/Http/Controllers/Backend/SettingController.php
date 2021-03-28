@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Settings\UpdateAppearanceRequest;
+use App\Http\Requests\Settings\UpdateMailSettingsRequest;
 use App\Http\Requests\Settings\UpdateGeneralSettingsRequest;
 
 class SettingController extends Controller
@@ -76,6 +77,37 @@ class SettingController extends Controller
     private function deleteOldLogo($path)
     {
         Storage::disk('public')->delete($path);
+    }
+
+
+
+     /**
+     * Show Mail Settings Page
+     * @return \Illuminate\View\View
+     */
+    public function mail()
+    {
+        return view('backend.settings.mail');
+    }
+
+    /**
+     * Update Mail Settings
+     * @param UpdateMailSettingsRequest $request
+     */
+    public function updateMailSettings(UpdateMailSettingsRequest $request)
+    {
+        Setting::updateSettings($request->validated());
+        // Update .env mail settings
+        Artisan::call("env:set MAIL_MAILER='". $request->mail_mailer ."'");
+        Artisan::call("env:set MAIL_HOST='". $request->mail_host ."'");
+        Artisan::call("env:set MAIL_PORT='". $request->mail_port ."'");
+        Artisan::call("env:set MAIL_USERNAME='". $request->mail_username ."'");
+        Artisan::call("env:set MAIL_PASSWORD='". $request->mail_password ."'");
+        Artisan::call("env:set MAIL_ENCRYPTION='". $request->mail_encryption ."'");
+        Artisan::call("env:set MAIL_FROM_ADDRESS='". $request->mail_from_address ."'");
+        Artisan::call("env:set MAIL_FROM_NAME='". $request->mail_from_name ."'");
+        notify()->success('Settings Successfully Updated.','Success');
+        return back();
     }
 
 
